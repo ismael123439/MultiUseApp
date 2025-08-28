@@ -1,0 +1,8 @@
+Flask==2.3.3
+Werkzeug==2.3.7
+whisper==20230314
+torch>=2.1.0
+torchaudio>=2.1.0
+pillow==10.1.0
+pytesseract==0.3.10
+googletrans==4.0.0rc1

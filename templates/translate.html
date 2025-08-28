@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Traductor de Texto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🌍 Traductor de Texto</h1>
+
+        <form id="translateForm">
+            <textarea id="textInput" placeholder="Escribe el texto a traducir..." required></textarea>
+            <select id="langSelect" required>
+                <option value="en">Inglés</option>
+                <option value="es">Español</option>
+                <option value="fr">Francés</option>
+                <option value="de">Alemán</option>
+                <option value="it">Italiano</option>
+            </select>
+            <button type="submit" id="translateBtn">
+                <span class="btn-text">Traducir</span>
+                <span class="btn-loading" style="display:none;">Procesando...</span>
+            </button>
+        </form>
+
+        <h2>Texto Traducido:</h2>
+        <textarea id="translatedText" readonly></textarea>
+        <button id="copyBtn">📋 Copiar</button>
+
+        <br><br>
+        <button class="btn-menu" onclick="window.location.href='/'">Volver al menú</button>
+
+        <div class="error" id="error" style="display:none;"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById("translateForm");
+        const translateBtn = document.getElementById("translateBtn");
+        const btnText = translateBtn.querySelector(".btn-text");
+        const btnLoading = translateBtn.querySelector(".btn-loading");
+        const translatedText = document.getElementById("translatedText");
+        const errorDiv = document.getElementById("error");
+        const copyBtn = document.getElementById("copyBtn");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const text = document.getElementById("textInput").value.trim();
+            const lang = document.getElementById("langSelect").value;
+            if (!text) return;
+
+            btnText.style.display = "none";
+            btnLoading.style.display = "inline";
+
+            try {
+                const formData = new FormData();
+                formData.append("text", text);
+                formData.append("lang", lang);
+
+                const response = await fetch("/process_translate", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    errorDiv.style.display = "block";
+                    errorDiv.innerText = data.error;
+                    translatedText.value = "";
+                } else {
+                    errorDiv.style.display = "none";
+                    translatedText.value = data.translated;
+                }
+            } catch (err) {
+                errorDiv.style.display = "block";
+                errorDiv.innerText = "Error al traducir el texto.";
+                translatedText.value = "";
+            } finally {
+                btnText.style.display = "inline";
+                btnLoading.style.display = "none";
+            }
+        });
+
+        copyBtn.addEventListener("click", () => {
+            translatedText.select();
+            navigator.clipboard.writeText(translatedText.value);
+            alert("Texto copiado al portapapeles!");
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transcripción y Traducción de Audio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎵 Transcripción y Traducción de Audio</h1>
+            <p>Sube un archivo de audio para transcribirlo y traducirlo automáticamente</p>
+        </header>
+
+        <main>
+            <form id="audioForm" enctype="multipart/form-data">
+                <div class="upload-section">
+                    <label for="audio_file" class="file-label">
+                        <span class="file-icon">📁</span>
+                        Seleccionar archivo de audio
+                    </label>
+                    <input type="file" id="audio_file" name="audio_file" accept=".mp3,.wav,.m4a,.flac,.ogg,.aac,.wma" required>
+                    <div class="file-info" id="fileInfo"></div>
+                </div>
+
+                <!-- Idioma de origen -->
+                <div class="language-section">
+                    <label for="source_language">Idioma de origen:</label>
+                    <select id="source_language" name="source_language">
+                        <option value="auto" selected>Detectar automáticamente</option>
+                        <option value="es">Español</option>
+                        <option value="en">Inglés</option>
+                        <option value="fr">Francés</option>
+                        <option value="de">Alemán</option>
+                        <option value="it">Italiano</option>
+                        <option value="pt">Portugués</option>
+                        <option value="ru">Ruso</option>
+                        <option value="ja">Japonés</option>
+                        <option value="ko">Coreano</option>
+                        <option value="zh">Chino</option>
+                    </select>
+                </div>
+
+                <!-- Idioma destino -->
+                <div class="language-section">
+                    <label for="target_language">Idioma de traducción:</label>
+                    <select id="target_language" name="target_language">
+                        <option value="es">Español</option>
+                        <option value="en">Inglés</option>
+                        <option value="fr">Francés</option>
+                        <option value="de">Alemán</option>
+                        <option value="it">Italiano</option>
+                        <option value="pt">Portugués</option>
+                        <option value="ru">Ruso</option>
+                        <option value="ja">Japonés</option>
+                        <option value="ko">Coreano</option>
+                        <option value="zh">Chino</option>
+                    </select>
+                </div>
+
+                <button type="submit" id="processBtn" class="process-btn">
+                    <span class="btn-text">Procesar Audio</span>
+                    <span class="btn-loading" style="display: none;">Procesando...</span>
+                </button>
+            </form>
+
+            <div class="results" id="results" style="display: none;">
+                <div class="result-section">
+                    <h2>📝 Transcripción</h2>
+                    <div class="result-content" id="transcription"></div>
+                </div>
+
+                <div class="result-section">
+                    <h2>🌐 Traducción</h2>
+                    <div class="result-content" id="translation"></div>
+                    <button onclick="leerTraduccion()">🔊 Escuchar Traducción</button>
+                </div>
+            </div>
+
+            <div class="error" id="error" style="display: none;"></div>
+
+            <br>
+            <button class="btn-menu" onclick="window.location.href='/'">Volver al menú</button>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        function leerTraduccion() {
+            const texto = document.getElementById("translation").innerText;
+            if (texto.trim() === "") {
+                alert("No hay texto traducido para leer.");
+                return;
+            }
+            const targetLang = document.getElementById("target_language").value;
+            const utterance = new SpeechSynthesisUtterance(texto);
+            utterance.lang = targetLang + "-" + targetLang.toUpperCase();
+            speechSynthesis.speak(utterance);
+        }
+    </script>
+</body>
+</html>

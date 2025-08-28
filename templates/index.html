@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Principal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Menú Principal</h1>
+
+        <div class="menu">
+            <!-- Tarjeta 1: Audio -->
+            <div class="card" onclick="window.location.href='/audio'">
+                🎵 Audio: Transcriptor y Traductor
+            </div>
+
+            <!-- Tarjeta 2: Imagen -->
+            <div class="card" onclick="window.location.href='/ocr'">
+                🖼️ Leer Imagen a Texto
+            </div>
+
+            <!-- Tarjeta 3: Traductor -->
+            <div class="card" onclick="window.location.href='/translate'">
+                🌍 Traductor de Texto
+            </div>
+        </div>
+
+        <!-- Footer con links a GitHub -->
+        <footer>
+            <p>Desarrollado por <a href="https://github.com/ismael123439" target="_blank">Ismael123439</a></p>
+            <p>Repositorio de la app: <a href="https://github.com/ismael123439/MultiUseApp" target="_blank">MultiUseApp</a></p>
+        </footer>
+    </div>
+</body>
+</html>

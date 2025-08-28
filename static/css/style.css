@@ -1,0 +1,268 @@
+/* ======================== */
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    padding: 20px;
+}
+
+/* ======================== */
+/* Contenedor principal */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    padding: 40px 30px;
+    text-align: center;
+}
+
+/* ======================== */
+/* Header */
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px 30px;
+    text-align: center;
+    border-radius: 15px 15px 0 0;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-weight: 400;
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* ======================== */
+/* Menú principal (tarjetas) */
+.menu {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.card {
+    width: 48vw;
+    max-width: 550px;
+    height: 300px;
+    padding: 40px;
+    font-size: 1.8rem;
+    border-radius: 20px;
+    background: #ffffff;
+    color: #2a3f5f;
+    text-align: center;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3);
+    background: #e3f2fd;
+    color: #1e3c72;
+}
+
+/* ======================== */
+/* Formularios */
+form {
+    margin-top: 20px;
+}
+
+.upload-section, .language-section {
+    margin-bottom: 25px;
+}
+
+.file-label {
+    display: inline-block;
+    padding: 15px 25px;
+    background: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    width: 100%;
+    color: #2a3f5f;
+    font-weight: 600;
+}
+
+.file-label:hover {
+    background: #e9ecef;
+    border-color: #667eea;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.file-info {
+    margin-top: 10px;
+    padding: 10px;
+    background: #dbeafe;
+    border-radius: 5px;
+    display: none;
+    color: #1e3c72;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #fff;
+}
+
+select, input[type="text"], textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    border: 2px solid #dee2e6;
+    background: #fff;
+    margin-top: 8px;
+    color: #1e3c72;
+}
+
+textarea {
+    resize: none;
+    min-height: 150px;
+    font-size: 1rem;
+    padding: 15px;
+}
+
+/* ======================== */
+/* Botones */
+.process-btn, button, .btn-menu {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.process-btn:hover:not(:disabled),
+button:hover,
+.btn-menu:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+}
+
+.process-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* ======================== */
+/* Resultados */
+.results, .result, #transcription {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 1.1em;
+    text-align: left;
+    min-height: 200px;
+    overflow-y: auto;
+    background: #f0f4ff;
+    color: #1e3c72;
+    border-left: 4px solid #667eea;
+}
+
+.result-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    line-height: 1.6;
+    font-size: 1rem;
+    color: #1e3c72;
+    border: 1px solid #e0e7ff;
+}
+
+.error {
+    margin-top: 20px;
+    padding: 15px;
+    background: #ffe0e0;
+    color: #b71c1c;
+    border: 1px solid #ffbaba;
+    border-radius: 8px;
+}
+
+/* ======================== */
+/* Botón de copiar texto */
+.copy-btn {
+    width: 45px;
+    height: 45px;
+    background-image: url('/static/imgs/54702.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    padding: 0;
+    outline: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.copy-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* ======================== */
+/* Footer */
+footer {
+    background: rgba(255,255,255,0.1);
+    padding: 20px 30px;
+    text-align: center;
+    color: #e0e7ff;
+    font-size: 0.9rem;
+}
+
+/* ======================== */
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ======================== */
+/* Responsivo */
+@media (max-width: 768px) {
+    .container { padding: 30px 20px; }
+    header { padding: 30px 20px; }
+    header h1 { font-size: 2rem; }
+}
+
+@media (max-width: 600px) {
+    .container { margin: 20px; padding: 15px; }
+    .card { width: 100%; height: auto; padding: 30px; font-size: 1.3rem; }
+}

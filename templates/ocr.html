@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR - Reconocimiento de Texto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🖼️ OCR - Reconocimiento de Texto</h1>
+            <p>Sube una imagen y obtén el texto automáticamente</p>
+        </header>
+
+        <main>
+            <form id="ocrForm" enctype="multipart/form-data">
+                <div class="upload-section">
+                    <label for="image_file" class="file-label">
+                        <span class="file-icon">📁</span>
+                        Seleccionar imagen
+                    </label>
+                    <input type="file" id="image_file" name="image_file" accept=".png,.jpg,.jpeg,.bmp,.tiff,.webp" required>
+                    <div class="file-info" id="fileInfo"></div>
+                </div>
+
+                <!-- Botón para procesar la imagen -->
+                <button type="submit" id="processBtn" class="process-btn">Procesar Imagen</button>
+            </form>
+
+            <!-- Resultado -->
+            <div class="results" id="results" style="display: none;">
+                <h2>📝 Texto Reconocido</h2>
+                <textarea id="ocrText" readonly></textarea>
+                <button class="copy-btn" onclick="copyText()"></button>
+            </div>
+
+            <div class="error" id="error" style="display: none;"></div>
+
+            <br>
+            <button class="btn-menu" onclick="window.location.href='/'">Volver al menú</button>
+        </main>
+    </div>
+
+    <script>
+        const ocrForm = document.getElementById("ocrForm");
+        const resultsDiv = document.getElementById("results");
+        const ocrTextDiv = document.getElementById("ocrText");
+        const errorDiv = document.getElementById("error");
+
+        ocrForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const fileInput = document.getElementById("image_file");
+            if (!fileInput.files.length) return;
+
+            const formData = new FormData();
+            formData.append("image_file", fileInput.files[0]);
+
+            try {
+                const response = await fetch("/process_ocr", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    errorDiv.style.display = "block";
+                    errorDiv.innerText = data.error;
+                    resultsDiv.style.display = "none";
+                } else {
+                    resultsDiv.style.display = "block";
+                    errorDiv.style.display = "none";
+                    ocrTextDiv.value = data.text;
+                }
+
+            } catch (err) {
+                console.error(err);
+                errorDiv.style.display = "block";
+                errorDiv.innerText = "Error al procesar la imagen.";
+                resultsDiv.style.display = "none";
+            }
+        });
+
+        function copyText() {
+            const textarea = document.getElementById("ocrText");
+            textarea.select();
+            document.execCommand("copy");
+            alert("Texto copiado al portapapeles");
+        }
+    </script>
+</body>
+</html>
